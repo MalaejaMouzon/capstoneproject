@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Game #{{ game.id }}</h5>
+                    <a href="{{ url_for('game.lobby') }}" class="btn btn-sm btn-outline-secondary">Back to Lobby</a>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="game-info mb-4">
+                    <div class="row text-center">
+                        <div class="col">
+                            <h6>Player X</h6>
+                            <p class="mb-0">{{ game.player1.username }}</p>
+                        </div>
+                        <div class="col">
+                            <h6>Current Turn</h6>
+                            <p class="mb-0">{{ game.current_player }}</p>
+                        </div>
+                        <div class="col">
+                            <h6>Player O</h6>
+                            <p class="mb-0">
+                                {% if game.player2 %}
+                                    {{ game.player2.username }}
+                                {% else %}
+                                    Waiting for opponent...
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="game-board mb-4">
+                    <div class="board-container">
+                        {% for i in range(9) %}
+                            <div class="board-cell" data-position="{{ i }}">
+                                {% if game.board_state[i] != ' ' %}
+                                    <span class="player-{{ game.board_state[i] }}">{{ game.board_state[i] }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="game-status text-center">
+                    {% if game.game_status == 'completed' %}
+                        {% if game.winner %}
+                            <h4 class="text-success">
+                                {% if game.winner == current_user.id %}
+                                    You won!
+                                {% else %}
+                                    {{ game.winning_player.username }} won!
+                                {% endif %}
+                            </h4>
+                        {% else %}
+                            <h4 class="text-info">It's a draw!</h4>
+                        {% endif %}
+                    {% else %}
+                        <p class="text-muted">
+                            {% if game.current_player == 'X' and game.player1_id == current_user.id %}
+                                Your turn (X)
+                            {% elif game.current_player == 'O' and game.player2_id == current_user.id %}
+                                Your turn (O)
+                            {% else %}
+                                Waiting for opponent's move...
+                            {% endif %}
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<div id="game-config" 
+     data-game-id="{{ game.id }}"
+     data-current-player="{{ game.current_player }}"
+     data-is-player-x="{{ game.player1_id == current_user.id }}"
+     data-is-player-o="{{ game.player2_id == current_user.id }}"
+     data-game-status="{{ game.game_status }}"
+     style="display: none;">
+</div>
+<script>
+    const configElement = document.getElementById('game-config');
+    window.gameConfig = {
+        gameId: parseInt(configElement.dataset.gameId),
+        currentPlayer: configElement.dataset.currentPlayer,
+        isPlayerX: configElement.dataset.isPlayerX === 'True',
+        isPlayerO: configElement.dataset.isPlayerO === 'True',
+        gameStatus: configElement.dataset.gameStatus
+    };
+</script>
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %} 

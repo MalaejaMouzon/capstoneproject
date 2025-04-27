@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+    background-color: #f8f9fa;
+}
+
+/* Game Board Styles */
+.game-board {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.board-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    background-color: #333;
+    padding: 5px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+}
+
+.board-cell {
+    aspect-ratio: 1;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.board-cell:hover {
+    background-color: #f0f0f0;
+}
+
+.board-cell[data-position] {
+    cursor: pointer;
+}
+
+.board-cell[data-position]:not(:empty) {
+    cursor: not-allowed;
+}
+
+.player-X {
+    color: #007bff;
+}
+
+.player-O {
+    color: #28a745;
+}
+
+/* Game Info Styles */
+.game-info {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .board-cell {
+        font-size: 2rem;
+    }
+}
+
+/* Profile Page Styles */
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.stat-card {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.stat-card h3 {
+    margin-bottom: 0.5rem;
+    color: #007bff;
+}
+
+/* Game History Styles */
+.game-history {
+    margin-top: 2rem;
+}
+
+.game-history-item {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form Styles */
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* Alert Styles */
+.alert {
+    margin-bottom: 1rem;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    background-color: #0069d9;
+    border-color: #0062cc;
+}
+
+/* Card Styles */
+.card {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: none;
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid rgba(0,0,0,0.125);
+} 
